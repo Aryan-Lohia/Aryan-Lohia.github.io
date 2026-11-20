@@ -129,6 +129,16 @@ async def main():
             if bad_net:
                 failures.append(f"failed requests {width}: {bad_net}")
 
+            easy = await page.evaluate(
+                """() => {
+                  const el = document.querySelector('.hero h1 .shine');
+                  const s = getComputedStyle(el);
+                  return { color: s.color, fill: s.webkitTextFillColor, opacity: s.opacity };
+                }"""
+            )
+            if easy["opacity"] != "1" or "209, 102, 58" not in easy["color"] or "209, 102, 58" not in easy["fill"]:
+                failures.append(f"easy. not solid burnt orange at {width}: {easy}")
+
             if width == 360:
                 box = await page.locator(".hero .cta-row .btn").first.bounding_box()
                 if not box or box["y"] + box["height"] > 640:
@@ -179,6 +189,15 @@ async def main():
         )
         if opacity != "1":
             failures.append(f"reduced motion reveal opacity {opacity}")
+        easy = await page.evaluate(
+            """() => {
+              const el = document.querySelector('.hero h1 .shine');
+              const s = getComputedStyle(el);
+              return { color: s.color, fill: s.webkitTextFillColor, opacity: s.opacity };
+            }"""
+        )
+        if easy["opacity"] != "1" or "209, 102, 58" not in easy["color"] or "209, 102, 58" not in easy["fill"]:
+            failures.append(f"reduced-motion easy. not solid burnt orange: {easy}")
         await page.screenshot(path=str(OUT / "390-reduced-motion.png"), full_page=True)
         await context.close()
 

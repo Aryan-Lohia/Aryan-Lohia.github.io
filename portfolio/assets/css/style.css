@@ -202,7 +202,9 @@ section[id], #logos { scroll-margin-top: calc(var(--nav-h) + 12px); }
   font-style: italic;
   font-weight: 600;
   text-transform: none;
-  color: var(--gold);
+  color: #D1663A;
+  -webkit-text-fill-color: #D1663A;
+  opacity: 1;
 }
 #pl-sans, #pl-serif { opacity: 0; }
 .js.ready #pl-sans, .js.ready #pl-serif,
@@ -396,19 +398,17 @@ html.has-cursor input, html.has-cursor select, html.has-cursor textarea, html.ha
   margin-top: .02em;
   font-size: .92em;
   line-height: .86;
-  color: var(--gold);
+  color: #D1663A;
+  -webkit-text-fill-color: #D1663A;
+  background: none;
+  opacity: 1;
+  text-shadow: none;
 }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .js.ready .shine {
-    background-image: linear-gradient(105deg, #C9A45C 0%, #C9A45C 35%, #F3DE9A 50%, #C9A45C 65%, #C9A45C 100%);
-    background-size: 220% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 6s linear infinite;
-  }
+.js.ready .hero h1 .shine { animation: riseSolid .8s var(--ease) both; }
+@keyframes riseSolid {
+  from { transform: translateY(36px); }
+  to { transform: none; }
 }
-@keyframes shine { to { background-position: -220% 0; } }
 .js.ready .hero-line { animation: rise .8s var(--ease) both; }
 @keyframes rise {
   from { opacity: 0; transform: translateY(36px); }
@@ -896,9 +896,11 @@ textarea { min-height: 96px; resize: vertical; }
   .js .reveal, .js .reveal.in { opacity: 1 !important; transform: none !important; }
   .shine, .js.ready .shine {
     animation: none !important;
-    -webkit-text-fill-color: var(--gold);
-    color: var(--gold);
-    background: none;
+    -webkit-text-fill-color: #D1663A !important;
+    color: #D1663A !important;
+    background: none !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
   }
   .marquee-track { animation: none !important; flex-wrap: wrap; width: auto !important; max-width: 100%; }
   .logo-track { padding-inline: 16px; }
