@@ -1,0 +1,69 @@
+{
+  "photos": [
+    {
+      "file": "assets/img/aryan-lohia-ai-trainer.webp",
+      "what": "Portrait of Aryan Lohia, used in the hero",
+      "author": "Aryan Lohia",
+      "source": "https://courses.aryanlohia.com/assets/img/aryan-lohia-ai-trainer.webp",
+      "licence": "Published by the subject on his courses site"
+    },
+    {
+      "file": "assets/img/aryan-lohia-live-ai-session.webp",
+      "what": "Aryan Lohia teaching a live one-on-one AI session",
+      "author": "Aryan Lohia",
+      "source": "https://courses.aryanlohia.com/assets/img/aryan-lohia-live-ai-session.webp",
+      "licence": "Published by the subject on his courses site"
+    },
+    {
+      "file": "assets/og/og-home.jpg",
+      "what": "Link-preview image",
+      "author": "Aryan Lohia (Easy with Aaryan)",
+      "source": "https://courses.aryanlohia.com/assets/img/og/og-home.jpg",
+      "licence": "Published on his courses site"
+    }
+  ],
+  "logos": [
+    {
+      "file": "assets/img/brand/AL_icon_black.svg",
+      "what": "AL icon, header",
+      "author": "Aryan Lohia",
+      "source": "Aryan Lohia Brand Kit v2 (2026), supplied SVG",
+      "licence": "Brand artwork. Not retyped."
+    },
+    {
+      "file": "assets/img/brand/AL_horizontal_ivory.svg",
+      "what": "Horizontal AL monogram, footer",
+      "author": "Aryan Lohia",
+      "source": "Aryan Lohia Brand Kit v2 (2026), supplied SVG",
+      "licence": "Brand artwork. Not retyped."
+    },
+    {
+      "file": "assets/favicon-32.png",
+      "what": "Favicon",
+      "author": "Aryan Lohia",
+      "source": "https://courses.aryanlohia.com/favicon-32.png",
+      "licence": "Published on his courses site"
+    },
+    {
+      "file": "assets/apple-touch-icon.png",
+      "what": "Apple touch icon",
+      "author": "Aryan Lohia",
+      "source": "https://courses.aryanlohia.com/apple-touch-icon.png",
+      "licence": "Published on his courses site"
+    },
+    {
+      "file": "assets/img/aihive-icon.jpeg",
+      "what": "AI Hive icon",
+      "author": "AI Hive",
+      "source": "https://theaihive.io/brand/logoicon.jpeg",
+      "licence": "Product brand asset from theaihive.io"
+    },
+    {
+      "file": "assets/img/logos/*.webp",
+      "what": "Organisation marks in the workshops strip: Google Developer Student Clubs, BNI, FICCI FLO, TiE Siliguri, Lions Clubs International, Nexis, ChatterBox (JD Speakers Institute), Army Medical Corps (Indian Army), GlobalReach Siliguri, Business N Buddies (BNB)",
+      "author": "Each named organisation",
+      "source": "https://courses.aryanlohia.com/ (homepage logo row)",
+      "licence": "Shown as published on Aryan Lohia's courses site to name workshops, talks, and software he already lists. Trademarks stay with the organisations."
+    }
+  ]
+}
