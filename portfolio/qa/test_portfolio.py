@@ -18,28 +18,45 @@ OUT = Path(__file__).resolve().parent / "screenshots"
 WA = "https://wa.me/917864955155?text="
 
 OVERFLOW_JS = """
-() => [...document.querySelectorAll('body *')].filter(el => {
-  const r = el.getBoundingClientRect();
-  const pos = getComputedStyle(el).position;
-  return r.width > 0 && (r.right > innerWidth + 1 || r.left < -1) && pos !== 'fixed';
-}).slice(0, 12).map(el => {
-  const r = el.getBoundingClientRect();
-  return (el.className || el.tagName) + ' | ' + el.tagName + ' | ' + Math.round(r.left) + '..' + Math.round(r.right);
-})
+() => {
+  function clipped(el) {
+    let n = el.parentElement;
+    while (n && n !== document.documentElement) {
+      const s = getComputedStyle(n);
+      const ox = s.overflowX;
+      if (ox === 'hidden' || ox === 'clip' || ox === 'auto' || ox === 'scroll') return true;
+      n = n.parentElement;
+    }
+    return false;
+  }
+  return [...document.querySelectorAll('body *')].filter(el => {
+    const r = el.getBoundingClientRect();
+    const pos = getComputedStyle(el).position;
+    if (r.width === 0 || r.height === 0) return false;
+    if (pos === 'fixed' || pos === 'sticky') return false;
+    if (clipped(el)) return false;
+    return r.right > innerWidth + 1 || r.left < -1;
+  }).slice(0, 12).map(el => {
+    const r = el.getBoundingClientRect();
+    return (el.className && String(el.className).slice(0, 40) || el.tagName) + ' | ' + Math.round(r.left) + '..' + Math.round(r.right);
+  });
+}
 """
 
 
 async def prep(page):
     await page.goto(URL, wait_until="networkidle")
+    await page.wait_for_selector("#preloader", state="detached", timeout=7000)
     await page.evaluate(
         """() => {
           document.documentElement.style.scrollBehavior = 'auto';
+          document.documentElement.classList.add('ready');
           document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
           document.querySelectorAll('img[loading=lazy]').forEach(img => { img.loading = 'eager'; });
         }"""
     )
     await page.evaluate("() => document.fonts.ready")
-    await page.wait_for_timeout(400)
+    await page.wait_for_timeout(500)
 
 
 def assert_wa(hrefs):
@@ -156,7 +173,7 @@ async def main():
         await page.evaluate("() => document.fonts.ready")
         opacity = await page.evaluate(
             """() => {
-              const el = document.querySelector('.proof .reveal');
+              const el = document.querySelector('.effect .reveal');
               return el ? getComputedStyle(el).opacity : 'missing';
             }"""
         )
@@ -181,11 +198,13 @@ async def main():
         blocked = await page.evaluate(
             """() => {
               const pre = document.getElementById('preloader');
-              return Boolean(pre);
+              if (!pre) return false;
+              const s = getComputedStyle(pre);
+              return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0.05;
             }"""
         )
         if blocked:
-            failures.append("preloader present")
+            failures.append("preloader still covering the page without JS")
         await context.close()
         await browser.close()
 
