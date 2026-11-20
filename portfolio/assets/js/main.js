@@ -1,7 +1,6 @@
 (function () {
   var WA_NUMBER = "917864955155";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var fine = window.matchMedia("(pointer: fine)").matches;
 
   function waUrl(message) {
     return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(message);
@@ -140,80 +139,6 @@
   function varNav() { return 36; }
   window.addEventListener("scroll", paintHeader, { passive: true });
   paintHeader();
-
-  /* Portrait tilt */
-  var figure = document.getElementById("hero-figure");
-  var hero = document.querySelector(".hero");
-  if (figure && hero && fine && !reduce) {
-    hero.addEventListener("mousemove", function (event) {
-      var rect = hero.getBoundingClientRect();
-      var px = (event.clientX - rect.left) / rect.width - 0.5;
-      var py = (event.clientY - rect.top) / rect.height - 0.5;
-      figure.style.transform = "rotateY(" + (px * 10) + "deg) rotateX(" + (-py * 8) + "deg) translate3d(" + (px * -16) + "px, " + (py * -10) + "px, 0)";
-    });
-    hero.addEventListener("mouseleave", function () { figure.style.transform = ""; });
-  }
-
-  /* Magnetic buttons */
-  if (fine && !reduce) {
-    document.querySelectorAll(".js-magnet").forEach(function (btn) {
-      btn.addEventListener("mousemove", function (event) {
-        var rect = btn.getBoundingClientRect();
-        var x = event.clientX - (rect.left + rect.width / 2);
-        var y = event.clientY - (rect.top + rect.height / 2);
-        btn.style.transform = "translate(" + (x * 0.22) + "px, " + (y * 0.28) + "px)";
-      });
-      btn.addEventListener("mouseleave", function () { btn.style.transform = ""; });
-    });
-  }
-
-  /* Scramble on hover. Restores the original word. */
-  if (fine && !reduce) {
-    document.querySelectorAll("[data-scramble]").forEach(function (el) {
-      var original = el.textContent;
-      var timer = null;
-      el.addEventListener("mouseenter", function () {
-        var frame = 0;
-        clearInterval(timer);
-        timer = setInterval(function () {
-          frame += 1;
-          el.textContent = original.split("").map(function (ch, index) {
-            if (ch === " " || index < frame) return original.charAt(index);
-            return "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
-          }).join("");
-          if (frame > original.length + 1) {
-            clearInterval(timer);
-            el.textContent = original;
-          }
-        }, 32);
-      });
-      el.addEventListener("mouseleave", function () {
-        clearInterval(timer);
-        el.textContent = original;
-      });
-    });
-  }
-
-  /* Custom cursor */
-  var cursor = document.querySelector(".cursor");
-  var cursorLabel = document.querySelector(".cursor-label");
-  if (cursor && fine && !reduce) {
-    var cx = 0;
-    var cy = 0;
-    window.addEventListener("mousemove", function (event) {
-      cx = event.clientX;
-      cy = event.clientY;
-      cursor.style.transform = "translate(" + cx + "px, " + cy + "px)";
-      document.documentElement.classList.add("has-cursor");
-    });
-    window.addEventListener("keydown", function (event) {
-      if (event.key === "Tab") document.documentElement.classList.remove("has-cursor");
-    });
-    document.addEventListener("mouseover", function (event) {
-      var node = event.target.closest ? event.target.closest("[data-cursor]") : null;
-      cursorLabel.textContent = node ? node.getAttribute("data-cursor") : "";
-    });
-  }
 
   /* Mobile bar hides on the contact band. */
   var bar = document.querySelector(".mobile-bar");
